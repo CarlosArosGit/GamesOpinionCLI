@@ -14,7 +14,7 @@
                         <textarea class="form-control" id="txtOpinion" rows="3" v-model="opinionForm"
                             placeholder="Tú opinión debe ir aquí"></textarea>
                     </div>
-
+                    <p id="pError">¡Los campos no pueden estar vacíos!</p>
                     <button type="submit" v-on:click.prevent="agregarOpinion()" class="btn btn-info">{{ textoBtn
                     }}</button>
                 </form>
@@ -64,27 +64,33 @@ export default {
     },
     methods: {
         agregarOpinion: function () {
+            if (this.nombreForm != '' && this.opinionForm != '') {
+                $("#pError").css("display", "none");
+                if (this.textoBtn == 'Agregar') {
+                    this.cantidadOpiniones++;
+                    let nuevaOpinion = {
+                        nombre: this.nombreForm,
+                        opinion: this.opinionForm,
+                    };
+                    this.opiniones.push(nuevaOpinion);
+                    this.nombreForm = '';
+                    this.opinionForm = '';
+                }
+                else if (this.textoBtn == 'Actualizar') {
+                    let opinionActualizada = {
+                        nombre: this.nombreForm,
+                        opinion: this.opinionForm,
+                    };
+                    this.opiniones.splice(this.indiceActualizar, 1, opinionActualizada);
+                    this.nombreForm = '';
+                    this.opinionForm = '';
+                    this.textoBtn = 'Agregar'
+                }
+            }else{
+                $("#pError").css("display", "block");
+            }
 
-            if (this.textoBtn == 'Agregar') {
-                this.cantidadOpiniones++;
-                let nuevaOpinion = {
-                    nombre: this.nombreForm,
-                    opinion: this.opinionForm,
-                };
-                this.opiniones.push(nuevaOpinion);
-                this.nombreForm = '';
-                this.opinionForm = '';
-            }
-            else if (this.textoBtn == 'Actualizar') {
-                let opinionActualizada = {
-                    nombre: this.nombreForm,
-                    opinion: this.opinionForm,
-                };
-                this.opiniones.splice(this.indiceActualizar, 1, opinionActualizada);
-                this.nombreForm = '';
-                this.opinionForm = '';
-                this.textoBtn = 'Agregar'
-            }
+
         },
         eliminarOpinion: function (indice) {
             this.cantidadOpiniones--;
@@ -112,5 +118,9 @@ export default {
 
 .btnVolver {
     margin-left: 10px;
+}
+#pError{
+    color: rgb(208, 0, 0);
+    display: none;
 }
 </style>

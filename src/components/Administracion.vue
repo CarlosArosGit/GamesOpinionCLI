@@ -3,9 +3,9 @@
         <div class="container">
             <div class="margen mt-5">
                 <h1 id="parrafoIngrese">Para ver la información ingresa tus datos</h1>
-            <div v-if="mostrarBtn" class="mt-4">
-                <button class="btn btn-success" v-on:click="mostrarFormulario">Ingresar Datos</button>
-            </div>
+                <div v-if="mostrarBtn" class="mt-4">
+                    <button class="btn btn-success" v-on:click="mostrarFormulario">Ingresar Datos</button>
+                </div>
             </div>
             <div v-if="mostrarForm" class="container margen">
                 <form>
@@ -17,6 +17,7 @@
                         <label for="txtApellido" class="form-label">Apellido:</label>
                         <input type="text" class="form-control" id="txtApellido" v-model="apellidoForm">
                     </div>
+                    <p id="pError">¡Los campos no pueden estar vacíos!</p>
                     <button type="submit" v-on:click.prevent="enviarDatos()" class="btn btn-success">Enviar</button>
                 </form>
             </div>
@@ -42,8 +43,9 @@
                                     <div id="divCoins" class="container margen">
                                         <h5 class="fwParrafos">¿Deseas Comprar Coins para este Juego?</h5>
                                         <div class="centro">
-                                            <button id="btnCoins" class="btn btn-warning" v-on:click="agregarCoins"><i class="bi bi-cash-coin"></i> Agregar
-                                            Coins</button>
+                                            <button id="btnCoins" class="btn btn-warning" v-on:click="agregarCoins"><i
+                                                    class="bi bi-cash-coin"></i> Agregar
+                                                Coins</button>
                                         </div>
                                         <hr>
                                         <h4 class="fwParrafos">Cantidad de Coins Comprados</h4>
@@ -107,8 +109,13 @@ export default {
             $("#parrafoIngrese").css("display", "none");
         },
         enviarDatos: function () {
-            this.mostrarForm = false;
-            this.mostrarResumen = true;
+            if (this.nombreForm != '' && this.apellidoForm != '') {
+                $("#pError").css("display", "none");
+                this.mostrarForm = false;
+                this.mostrarResumen = true;
+            } else {
+                $("#pError").css("display", "block");
+            }
         },
         agregarCoins: function () {
             this.cantidadCoins++;
@@ -136,12 +143,14 @@ export default {
 </script>
 
 <style scoped>
-.margen{
+.margen {
     text-align: left;
 }
-.centro{
+
+.centro {
     text-align: center;
 }
+
 #seccionNombre {
     background-color: rgba(0, 0, 0, 0.92);
     color: rgb(162, 162, 162);
@@ -151,20 +160,30 @@ export default {
 #divCoins {
     border: 0.5px solid rgba(128, 128, 128, 0.683);
 }
-.imgLogo{
+
+.imgLogo {
     margin-top: 50px;
 }
-#btnCoins{
+
+#btnCoins {
     margin-top: 50px;
 }
-.fwParrafos{
+
+.fwParrafos {
     font-weight: 500;
 }
-.cWhite{
+
+.cWhite {
     color: white;
 }
-#limiteCoins{
+
+#limiteCoins {
     color: rgb(117, 116, 116);
     font-size: 20px;
+}
+
+#pError {
+    color: rgb(208, 0, 0);
+    display: none;
 }
 </style>
