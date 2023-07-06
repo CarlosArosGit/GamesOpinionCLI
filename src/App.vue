@@ -1,9 +1,11 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+    <nav class="navbar navbar-expand-lg bg-body-tertiary bg-dark border-bottom border-bottom-dark" data-bs-theme="dark">
+      <div class="container-fluid">
+        <a class="navbar-brand"><i class="bi bi-controller"></i> <strong>Games opinion</strong></a>
+        <router-link to="/" class="homeIcon"><i class="bi bi-house-fill"></i> Home</router-link>
+      </div>
+    </nav>
+  <router-view />
 </template>
 
 <style>
@@ -18,13 +20,10 @@
 nav {
   padding: 30px;
 }
-
-nav a {
-  font-weight: bold;
-  color: #2c3e50;
+a{
+  text-decoration: none;
 }
-
-nav a.router-link-exact-active {
-  color: #42b983;
+.homeIcon{
+  color: white;
 }
 </style>
